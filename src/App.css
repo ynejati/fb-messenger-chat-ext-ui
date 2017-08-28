@@ -1,0 +1,272 @@
+/*
+A good catchall.
+*/
+img, embed,
+object, video {
+ max-width: 100%;
+ max-height: 100%;
+}
+
+/*
+Hide the scrollbar
+*/
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* 
+The high level flex container 
+which wraps the App.
+*/
+.webviewContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw; 
+}
+
+/* 
+A flex item to App-container and a flex container for
+flex items consisting of app components.
+*/
+.webview {
+  border: 2px dotted tomato;
+  border-radius: 10px;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
+  overflow: hidden; 
+}
+
+.flexContainerWrapper {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+/*
+Container for the  message form.
+*/
+.message {
+  width: 90%;
+  align-self: center;
+  padding-bottom: 10px;
+  padding-top: 20px;
+}
+
+
+.enhancementsCarousel {  
+  height: 55vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto; /* TODO: Adds padding at the bottom, find workaround */
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+/*
+Flex item containers for the  library button
+and the  video recorder button
+*/
+.libraryEnhancementButton,
+.videoEnhancementButton {
+  align-self: center;
+}
+
+.panelContainer {
+  min-height: 100%;
+  min-width: 100%;
+  background-color: white;
+  box-sizing: border-box;
+  display: flex;
+  overflow: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel {
+  height: 50vh;
+  width: 90%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 0px;
+  background: no-repeat;
+  background-position: bottom center;
+  background-size: cover;
+}
+
+.circles {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 15px;
+}
+
+.circleContainer {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.12), inset 0 1px 2px rgba(0,0,0,0.24);
+}
+
+/*
+Flex item container for  gif search button
+*/
+.gifsSearch {
+  order: 0;
+  flex: 0 1 auto;
+  padding: 25px;
+  align-self: flex-end;
+}
+
+/*
+Flex item container for the  gif text
+*/
+.gifsText {
+  width: 70%;
+  height: 70%;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  color: white;
+  font-weight: 700px;
+  font-size: 30px;
+  order: 0;
+  flex: 0 0 auto;
+  align-self: center;
+  text-align: center;
+}
+
+/*
+Container for the tracks carousel
+*/
+.tracksCarousel {
+  height: 15vh;
+  width: 100%;
+  overflow: hidden; 
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  padding-bottom: 20px;
+}
+
+/*
+Container for the track panel
+*/
+.trackPanel {
+  width: 60%;
+  background-color: white;
+  flex: 0 0 auto; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.track {
+  padding: 10px 5px;
+  height: 50px;
+  min-width: 80%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  border-radius: 6px;
+}
+
+.track:hover {
+  transform: scale(1.02);
+}
+
+/*
+Container for the  generator button.
+*/
+.generateButton {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 20px;
+  width: 93%;
+}
+
+/*
+######
+Override some default React-Bootstrap CSS properties.
+######
+*/
+
+/*
+Increase size of search glyphicon.
+Note: This is okay for now since we are only using one glphyicon.  
+*/
+.glyphicon {
+  font-size: 20px;
+}
+
+/* 
+Give Bootstrap buttons styles similar to  mockup.
+TODO: Button active and onClick depression, text and background color.
+*/
+.btn {
+  background: linear-gradient(to right, #F56662, #E4467F);
+  color: white;
+}
+
+.btn:hover {
+  color: white;
+}
+
+/* 
+Give Bootstrap default buttons box shadow.
+*/
+.btn-default {
+  text-shadow: 0 .25px black;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+ .btn-default:hover {
+  transform: scale(1.02);
+} 
+
+/* 
+Give forms a box shadow.
+*/
+.form-control {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+
+/*
+######
+Media queries for screen sizes.
+######
+*/
+@media only screen and (max-width: 320px) {
+  .message,
+  .generateButton,
+  .panel {
+     width: 80%; 
+  }
+}
+
+@media only screen and (min-width: 500px) {
+  .webview {
+    width: 600px;
+  }
+}
