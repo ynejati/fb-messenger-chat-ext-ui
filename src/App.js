@@ -1,25 +1,53 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, FormControl, Grid, Row, Image, Badge, Glyphicon, Panel } from 'react-bootstrap'
+import { Button, FormGroup, FormControl, Grid, Row, Image, Badge, Glyphicon } from 'react-bootstrap'
 import ScrollSnap from 'scroll-snap';
+
 import './App.css';
+
 
 class App extends Component {
   state = {
-    data: {
-      message: 'Enter your message...',
-    },
+    message: 'Enter your message...',
+    media: 'https://media.giphy.com/media/26BkNsQzs593dRzJ6/giphy.gif',
   };
+
+  componentDidMount() {
+    this.dotOne.focus();
+  }
 
   handleMessageChange = (event) => {
     this.setState({
-      data: {
-        message: event.target.value,
-      },
+      message: event.target.value,
     });
   };
 
+  handleEnhancementsCarouselRef = (ref) => {
+    this.enhancementsCarousel = ref;
+  }
+
+  handleDotOneRef = (ref) => {
+    this.dotOne = ref;
+  }
+
+  handleDotTwoRef = (ref) => {
+    this.dotTwo = ref;
+  }
+
+  handleDotThreeRef = (ref) => {
+    this.dotThree = ref;
+  }
+
+  handleEnhancementsCarouselScroll = () => {
+
+      // this.dotOne.unfocus();
+      // this.dotTwo.focus();
+    }
+
   render() {
-    const image = 'https://media.giphy.com/media/26BkNsQzs593dRzJ6/giphy.gif'
+    const {
+      message,
+      media,
+    } = this.state;
 
     return (
       <div className='webviewContainer'>
@@ -30,15 +58,22 @@ class App extends Component {
             </Row>
             <Row>
               <EnhancementsCarousel
-                message={this.state.data.message}
-                image={image}
-              />
+                onScroll={this.handleEnhancementsCarouselScroll}
+                carouselRef={this.handleEnhancementsCarouselRef}
+              >
+                <GifPanel
+                  message={message}
+                  media={media}
+                />
+                <LibraryPanel />
+                <VideoPanel />
+              </EnhancementsCarousel>
             </Row>
             <Row>
               <div className='circles'>
-                {Circle}
-                {Circle}
-                {Circle}
+                <Dot ref={this.handleDotOneRef}/>
+                <Dot ref={this.handleDotTwoRef}/>
+                <Dot ref={this.handleDotThreeRef}/>
               </div>
             </Row>
             <Row>
@@ -88,20 +123,41 @@ class MessageInput extends Component {
   };
 }
 
-const GifsEnhancementPanel = (props) => {
-  const {
-    message,
-    image,
-  } = props;
+class Panel extends Component {
+  state = {
+    focused: false,
+  }
 
-  const backgroundImage = `url(${image})`;
-  const inlineStyle = image ? { backgroundImage: backgroundImage } : {};
+  render() {
+    const {
+      children,
+      panelStyle,
+    } = this.props;
 
-  return (
-    <div className='panelContainer'>
-      <div className='panel'
-        style={inlineStyle}
-      >
+    return (
+      <div className='panelContainer'>
+        <div className='panel'
+          style={panelStyle}
+        >
+          {children}
+        </div>
+      </div>
+    )
+  };
+}
+
+class GifPanel extends Component {
+  render() {
+    const {
+      media,
+      message,
+    } = this.props;
+
+    const backgroundImage = `url(${media})`;
+    const inlineStyle = media ? { backgroundImage: backgroundImage } : {};
+
+    return (
+      <Panel panelStyle={inlineStyle}>
         <div className='gifsSearch'>
           <Badge>
             <Glyphicon glyph='search' />
@@ -110,58 +166,59 @@ const GifsEnhancementPanel = (props) => {
         <div className='gifsText'>
           {message}
         </div>
-      </div>
-    </div>
-  );
-};
+      </Panel>
+    );
+  }
+}
 
-const LibraryEnhancementPanel = (
-  <div className='panelContainer'>
-    <div className='panel'>
-      <div className='libraryEnchancementButton'>
-        <Button bsSize='large'>ACCESS MY GALLERY</Button>
-      </div>
-    </div>
-  </div>
-);
+class LibraryPanel extends Component {
+  render() {
+    return (
+      <Panel>
+        <div className='libraryEnchancementButton'>
+          <Button bsSize='large'>ACCESS MY GALLERY</Button>
+        </div>
+      </Panel>
+    );
+  }
+}
 
-const VideoEnchancementPanel = (
-  <div className='panelContainer'>
-    <div className='panel'>
-      <div className='videoEnhancementButton'>
-        <Image src='record.png' responsive />
-      </div>
-    </div>
-  </div>
-);
+class VideoPanel extends Component {
+  render() {
+    return (
+      <Panel>
+        <div className='videoEnhancementButton'>
+          <Image src='record.png' responsive />
+        </div>
+      </Panel>
+    );
+  }
+}
 
 class EnhancementsCarousel extends Component {
+
   componentDidMount() {
     const snapConfig = {
-      scrollSnapDestination: '100% 0px',
-      scrollTimeout: 100,
-      scrollTime: 300
+      scrollSnapDestination: '100% 100%',
+      scrollTimeout: 300,
+      scrollTime: 200
     }
     const snapObject = new ScrollSnap(this.carousel, snapConfig)
-    snapObject.bind(this)
+    snapObject.bind(this);
   }
 
   handleRef = (ref) => {
     this.carousel = ref;
   }
 
-  handleGifsRef = (ref) => {
-    this.gifs = ref;
-  }
-
   handleScroll = () => {
   }
 
   render() {
-
     const {
-      message,
-      image,
+      children,
+      onScroll,
+      carouselRef,
     } = this.props;
 
     return (
@@ -171,13 +228,7 @@ class EnhancementsCarousel extends Component {
           onScroll={this.handleScroll}
           ref={this.handleRef}
         >
-          <GifsEnhancementPanel
-            message={message}
-            ref={this.handleGifsRef}
-            image={image}
-          />
-          {LibraryEnhancementPanel}
-          {VideoEnchancementPanel}
+          {children}
         </div>
       </div>
     );
@@ -192,20 +243,46 @@ const TrackPanel = (
   </div>
 );
 
-const Circle = (
-  <div className='circleContainer'>
-    <div className='circle' />
-  </div>
-);
+class Dot extends Component {
+  state = {
+    isFocused: false,
+  }
+
+  focus = () => {
+    this.setState({isFocused: true})
+  }
+
+  unfocus = () => {
+    this.setState({isFocused: false})
+  }
+
+  render() {
+    const {
+      isFocused,
+    } = this.state;
+
+    const inlineStyle = isFocused ? { backgroundColor: 'whitesmoke'} : {backgroundColor: 'white'};
+
+    return (
+      <div className='circleContainer'>
+        <div className='circle' 
+          style={inlineStyle}
+        />
+      </div>
+    );
+  }
+}
+
 
 class TracksCarousel extends Component {
+
   componentDidMount() {
     const snapConfig = {
-      scrollSnapDestination: '60% 0%',
-      scrollTimeout: 100,
-      scrollTime: 300,
-    };
-    const snapObject = new ScrollSnap(this.tracksCarousel, snapConfig);
+      scrollSnapDestination: '100% 100%',
+      scrollTimeout: 300,
+      scrollTime: 200
+    }
+    const snapObject = new ScrollSnap(this.tracksCarousel, snapConfig)
     snapObject.bind(this);
   }
 

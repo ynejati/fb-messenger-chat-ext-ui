@@ -67,7 +67,7 @@ Container for the  message form.
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
-  overflow-x: auto; /* TODO: Adds padding at the bottom, find workaround */
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
@@ -93,7 +93,7 @@ and the  video recorder button
 }
 
 .panel {
-  height: 50vh;
+  height: 52vh;
   width: 90%;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   border-radius: 10px;
@@ -151,7 +151,7 @@ Flex item container for the  gif text
   order: 0;
   flex: 0 0 auto;
   align-self: center;
-  text-align: center;
+  text-align: center; 
 }
 
 /*
@@ -262,6 +262,10 @@ Media queries for screen sizes.
   .generateButton,
   .panel {
      width: 80%; 
+  }
+
+  .gifsText {
+    font-size: 20px;
   }
 }
 
