@@ -278,7 +278,7 @@ class TracksCarousel extends Component {
 
   componentDidMount() {
     const snapConfig = {
-      scrollSnapDestination: '100% 100%',
+      scrollSnapDestination: '60% 60%',
       scrollTimeout: 300,
       scrollTime: 200
     }
